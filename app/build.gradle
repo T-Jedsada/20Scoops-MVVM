@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.getkeepsafe.dexcount'
 
 android {
     compileSdkVersion 25
@@ -24,7 +25,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation ('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -37,7 +38,7 @@ dependencies {
 
     compile 'com.google.code.gson:gson:' + rootProject.ext.gson_version
     compile 'io.reactivex.rxjava2:rxandroid:' + rootProject.ext.rx_android_version
-    compile 'io.reactivex.rxjava2:rxjava:' + rootProject.ext.rx_version
+    compile 'io.reactivex.rxjava2:rxkotlin:' + rootProject.ext.rx_version
 
     compile 'com.squareup.retrofit2:retrofit:' + rootProject.ext.retrofit_version
     compile 'com.squareup.retrofit2:converter-gson:' + rootProject.ext.retrofit_version
@@ -47,4 +48,6 @@ dependencies {
     compile 'com.google.dagger:dagger:2.11'
     kapt 'com.google.dagger:dagger-compiler:2.11'
     provided 'javax.annotation:jsr250-api:1.0'
+
+    compile 'com.jakewharton.timber:timber:4.5.1'
 }

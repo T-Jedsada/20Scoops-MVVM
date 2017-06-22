@@ -21,7 +21,6 @@ abstract class BaseActivity : AppCompatActivity(), LifecycleRegistryOwner {
     abstract fun startView()
     abstract fun stopView()
     abstract fun doInjection(appComponent: AppComponent)
-
     override fun getLifecycle(): LifecycleRegistry = mRegister
 
     override fun onCreate(savedInstanceState: Bundle?) {

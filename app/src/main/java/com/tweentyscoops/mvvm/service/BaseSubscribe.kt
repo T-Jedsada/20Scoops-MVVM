@@ -7,7 +7,7 @@ import java.net.HttpURLConnection
 class BaseSubscribe<T>(var callback: SubscribeCallback) : DisposableObserver<Response<T>>() {
 
     interface SubscribeCallback {
-        fun <T> onSuccess(t: T)
+        fun <T> onSuccess(dao: T)
         fun onFailure(msg: String?)
     }
 

@@ -9,11 +9,10 @@ import com.tweentyscoops.mvvm.service.repository.MovieApi
 import com.tweentyscoops.mvvm.ui.base.BaseActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import retrofit2.Response
 import timber.log.Timber
 import javax.inject.Inject
 
-class CustomActivity : BaseActivity(), BaseSubscribe.SubscribeCallback {
+class CustomActivity : BaseActivity(), BaseSubscribe.SubscribeSubscribeCallback {
 
     @Inject
     lateinit var movieAPIs: MovieApi
@@ -38,7 +37,6 @@ class CustomActivity : BaseActivity(), BaseSubscribe.SubscribeCallback {
         movieAPIs.getMovie("popularity.des", 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .onErrorReturn { Response.success(null) }
                 .subscribe(BaseSubscribe(this))
     }
 
@@ -55,7 +53,7 @@ class CustomActivity : BaseActivity(), BaseSubscribe.SubscribeCallback {
         Timber.e(gson.toJson(dao))
     }
 
-    override fun onFailure(msg: String?) {
+    override fun onError(msg: String?) {
         Timber.e(msg)
     }
 }

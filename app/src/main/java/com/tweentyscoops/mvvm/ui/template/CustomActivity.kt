@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
-class CustomActivity : BaseActivity(), BaseSubscribe.SubscribeSubscribeCallback {
+class CustomActivity : BaseActivity(), BaseSubscribe.SubscribeCallback {
 
     @Inject
     lateinit var movieAPIs: MovieApi
@@ -49,8 +49,8 @@ class CustomActivity : BaseActivity(), BaseSubscribe.SubscribeSubscribeCallback 
     }
 
     override fun <T> onSuccess(dao: T) {
-        dao as? MovieDao
-        Timber.e(gson.toJson(dao))
+        val data = dao as? MovieDao
+        Timber.e(gson.toJson(data))
     }
 
     override fun onError(msg: String?) {

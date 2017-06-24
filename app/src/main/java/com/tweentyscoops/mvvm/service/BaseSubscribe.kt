@@ -4,9 +4,9 @@ import io.reactivex.observers.DisposableObserver
 import retrofit2.Response
 import java.net.HttpURLConnection
 
-class BaseSubscribe<T>(var callback: SubscribeSubscribeCallback) : DisposableObserver<Response<T>>() {
+class BaseSubscribe<T>(var callback: SubscribeCallback) : DisposableObserver<Response<T>>() {
 
-    interface SubscribeSubscribeCallback : BaseSubscribeCallback {
+    interface SubscribeCallback : BaseSubscribeCallback {
         fun <T> onSuccess(dao: T)
         fun onError(msg: String?)
     }

@@ -1,23 +1,21 @@
 package com.tweentyscoops.mvvm.ui.template
 
-import com.google.gson.Gson
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
+import android.util.Log
 import com.tweentyscoops.mvvm.R
 import com.tweentyscoops.mvvm.di.AppComponent
-import com.tweentyscoops.mvvm.service.BaseSubscribe
-import com.tweentyscoops.mvvm.service.model.MovieDao
-import com.tweentyscoops.mvvm.service.repository.MovieApi
 import com.tweentyscoops.mvvm.ui.base.BaseActivity
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
 import javax.inject.Inject
 
-class CustomActivity : BaseActivity(), BaseSubscribe.SubscribeCallback {
+class CustomActivity : BaseActivity() {
+
+    private val TAG: String = CustomActivity::class.java.simpleName
 
     @Inject
-    lateinit var movieAPIs: MovieApi
-    @Inject
-    lateinit var gson: Gson
+    lateinit var customViewModelFactory: CustomViewModel.Factory
+
+    private var customViewModel: CustomViewModel? = null
 
     override fun doInjection(appComponent: AppComponent) {
         appComponent.inject(this)
@@ -26,7 +24,8 @@ class CustomActivity : BaseActivity(), BaseSubscribe.SubscribeCallback {
     override fun layoutToInflate() = R.layout.activity_main
 
     override fun setupView() {
-
+        customViewModel = ViewModelProviders.of(this, customViewModelFactory)
+                .get(CustomViewModel::class.java)
     }
 
     override fun setupInstance() {
@@ -34,26 +33,16 @@ class CustomActivity : BaseActivity(), BaseSubscribe.SubscribeCallback {
     }
 
     override fun initialize() {
-        movieAPIs.getMovie("popularity.des", 1)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(BaseSubscribe(this))
+
     }
 
     override fun startView() {
-
+        customViewModel?.getMovie()?.observe(this, Observer {
+            Log.d(TAG, "$it")
+        })
     }
 
     override fun stopView() {
 
-    }
-
-    override fun <T> onSuccess(dao: T) {
-        val data = dao as? MovieDao
-        Timber.e(gson.toJson(data))
-    }
-
-    override fun onError(msg: String?) {
-        Timber.e(msg)
     }
 }

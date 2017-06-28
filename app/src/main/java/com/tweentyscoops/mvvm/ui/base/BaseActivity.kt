@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.tweentyscoops.mvvm.MainApplication
 import com.tweentyscoops.mvvm.di.AppComponent
-import com.tweentyscoops.mvvm.service.BaseSubscribeCallback
 import com.tweentyscoops.mvvm.ui.exception.NotSetLayoutException
-import timber.log.Timber
 
 @Suppress("LeakingThis")
-abstract class BaseActivity : AppCompatActivity(), LifecycleRegistryOwner, BaseSubscribeCallback {
+abstract class BaseActivity : AppCompatActivity(), LifecycleRegistryOwner {
 
     private val mRegister = LifecycleRegistry(this)
 
@@ -42,13 +40,5 @@ abstract class BaseActivity : AppCompatActivity(), LifecycleRegistryOwner, BaseS
     override fun onStop() {
         super.onStop()
         stopView()
-    }
-
-    override fun onUnAuthorized() {
-        Timber.e("unAuthorized")
-    }
-
-    override fun onFailure(msg: String?) {
-        Timber.e(msg)
     }
 }

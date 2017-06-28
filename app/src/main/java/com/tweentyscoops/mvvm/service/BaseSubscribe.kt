@@ -2,13 +2,12 @@ package com.tweentyscoops.mvvm.service
 
 import io.reactivex.observers.DisposableObserver
 import retrofit2.Response
-import java.net.HttpURLConnection
 
 class BaseSubscribe<T>(var callback: SubscribeCallback) : DisposableObserver<Response<T>>() {
 
-    interface SubscribeCallback : BaseSubscribeCallback {
+    interface SubscribeCallback {
         fun <T> onSuccess(dao: T)
-        fun onError(msg: String?)
+        fun onFailure(msg: String?)
     }
 
     override fun onComplete() {
@@ -16,12 +15,10 @@ class BaseSubscribe<T>(var callback: SubscribeCallback) : DisposableObserver<Res
     }
 
     override fun onNext(t: Response<T>?) {
-        if (t?.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-            callback.onUnAuthorized()
-        } else if (t?.isSuccessful!!) {
+        if (t?.isSuccessful!!) {
             callback.onSuccess(t.body())
         } else {
-            callback.onError(t.message())
+            callback.onFailure(t.message())
         }
     }
 

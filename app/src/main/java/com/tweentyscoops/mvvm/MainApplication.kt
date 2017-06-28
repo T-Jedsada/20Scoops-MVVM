@@ -18,6 +18,7 @@ class MainApplication : Application() {
                 .appModule(AppModule(this))
                 .retrofitModule(RetrofitModule())
                 .apiModule(ApiModule())
+                .viewModelModule(ViewModelModule())
                 .build()
     }
 
